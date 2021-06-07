@@ -10,6 +10,6 @@ Planned:
 - Add the ability to post and delete messages
 - Logins and multiple users
 - Ability to see other user posts
-
+- Password Hashing
 
 
