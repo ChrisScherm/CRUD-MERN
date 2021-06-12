@@ -4,7 +4,7 @@ const cors = require('cors');
 //when working with react front end and node back end you need cors
 const mongoose = require('mongoose');
 const FriendModel = require('./models/Friends');
-
+const TweetModel = require('./models/Tweets');
   
 
 //need midware to accept json
@@ -16,11 +16,17 @@ app.use(express.json());
 /// DATABASE CONNECTION
 mongoose.connect(
     "mongodb://localhost:27017/tutorialmern?readPreference=primary&appname=MongoDB%20Compass&ssl=false", 
-    {useNewUrlParser: true }
+    {useNewUrlParser: true }  //need when connecting to mongoose
 );
 
 
+app.post("/addtweet", async (req, res) => {  
+    const tweetString = req.body.tweetString;
 
+        const newTweet = new TweetModel({tweetString: tweetString});
+        await newTweet.save();
+        res.send(newTweet);
+});
 
 app.post("/addfriend", async (req, res) => {
     
@@ -32,7 +38,7 @@ app.post("/addfriend", async (req, res) => {
      res.send(friend);
 });
 
-app.get("/read", async (req, res) => {
+app.get("/readFriends", async (req, res) => {
     FriendModel.find({}, (err, result) => { 
         if (err) {
             res.send(err);
@@ -42,7 +48,15 @@ app.get("/read", async (req, res) => {
     });
 });
 
-
+app.get("/readTweets", async (req, res) => {
+    TweetModel.find({}, (err, result) => { 
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(result);
+        }
+    });
+});
 
 app.put("/update", async (req, res) => {
     const newAge = req.body.newAge;
@@ -66,6 +80,9 @@ app.delete("/delete/:id", async (req, res) => {
     await FriendModel.findByIdAndRemove(id).exec();
     res.send("item deleted!");
 });
+
+
+
 
 app.listen(3001, () => {
     console.log("You are connected!");

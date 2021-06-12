@@ -9,6 +9,8 @@ function App() {
   const [age, setAge] = useState(0);
   const [listOfFriends, setListOfFriends] = useState([]);
 
+
+
   const addFriend = () => {
     Axios.post("http://localhost:3001/addfriend", 
     {name: name, age: age,})
@@ -36,8 +38,31 @@ function App() {
     });
   }
 
+  const [tweetString, setTweetString] = useState("");
+  const [listOfTweets, setListOfTweets] = useState([]);
+
+  const addTweet = () => {
+    Axios.post("http://localhost:3001/addtweet",
+    {tweetString: tweetString,})
+    .then((response) => {
+      setListOfTweets([...listOfTweets, {_id: response.data._id, tweetString: tweetString}]);
+    });
+  }
+
+  //fetches tweets/posts
   useEffect(() => {
-    Axios.get("http://localhost:3001/read")
+    Axios.get("http://localhost:3001/readTweets")
+      .then((response) => {
+        setListOfTweets(response.data);
+      })
+      .catch(() => { 
+        console.log("ERROR");
+      });
+  }, []);
+
+// fetches friend list
+  useEffect(() => {
+    Axios.get("http://localhost:3001/readFriends")
       .then((response) => {
         setListOfFriends(response.data);
       })
@@ -46,12 +71,15 @@ function App() {
       });
   }, []);
 
-  const [showFriends, setShowFriends] = useState(true);
-
+  const [showFriends, setShowFriends] = useState(true); //use with show / hide friends buttons
+  const [showTweets, setShowTweets] = useState(true); //use with show / hide tweets buttons
 
   return (
     <div className="App">
-      <div className="inputs">
+    <div class="floatContainer">
+      <div class="floatTitles" id="friendTitle"><h2>Add Friends</h2></div>
+      <div class="floatTitles" id="tweetTitle"><h2>Post Tweets</h2></div>
+      <div className="friendInputs">
         <input type="text" 
         placeholder="Friend name..." 
         onChange={(event) => {setName(event.target.value)}}
@@ -66,6 +94,18 @@ function App() {
         <button className="friendsButton" onClick={() => setShowFriends(true)}>Show Friends</button>
         <button className="friendsButton" onClick={() => setShowFriends(false)}>Hide Friends</button>
       </div>
+
+      <div className="tweetInputs">
+      <input type="text" 
+        placeholder="Post/Tweet Here..." 
+        onChange={(event) => {setTweetString(event.target.value)}}
+        />
+      <button className="tweetButton" onClick={addTweet}>Post Tweet</button>
+      </div>
+
+    </div>
+    
+    <div class="floatContainer">
       <div id = "showFriends" className="listOfFriends">
         {listOfFriends.map((val) => {
           if (showFriends) {
@@ -86,7 +126,30 @@ function App() {
           );}
           
         })}
-</div>;
+      </div>
+      <div id = "showTweets" className="listOfTweets">
+        {listOfTweets.map((val) => {
+          if (showTweets) {
+             return (
+          <div className="tweetContainer">
+              <div className="tweet"> 
+                <h4>{val.tweetString}</h4>
+              </div> 
+              {/* <button 
+                onClick={() => {updateFriend(val._id);}} >
+              Update
+              </button>
+              <button id="removeBtn" onClick={() => {
+                deleteFriend(val._id);
+                }}>X</button> */}
+            </div>
+          );}
+          
+        })}
+        
+      </div>
+    </div>
+
         
     </div>
   );

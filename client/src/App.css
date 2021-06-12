@@ -10,17 +10,45 @@ body {
   padding: 0;
 }
 
-.inputs{
-  height: 400px;
-  width: 100%;
+.floatContainer {
+  padding: 0;
+}
+
+.floatTitles {
+  height: 50px;
+  width: 50%;
+  float:left;
+
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: rgb(130, 243, 126);
+  border-top: 5px solid black;
 }
 
-.inputs input {
+#friendTitle{
+  background-color: rgb(172, 247, 169);
+}
+
+#tweetTitle{
+  background-color: rgb(114, 189, 250);
+}
+
+.tweetInputs {
+  height: 400px;
+  width: 50%;
+  float:left;
+  background-color: rgb(32, 142, 233);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-top: 5px solid black;
+  border-bottom: 5px solid black;
+}
+
+.tweetInputs input {
   width: 200px;
   height: 50px;
   font-size: 18px;
@@ -28,7 +56,41 @@ body {
   padding-left: 10px;
 }
 
-.inputs button {
+.tweetInputs button {
+  border: none;
+  width: 150px;
+  height: 50px;
+  background-color: #2226f3bd;
+  color: white;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.friendInputs{
+  height: 400px;
+  width: 50%;
+  float:left;
+  background-color: rgb(130, 243, 126);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  border-top: 5px solid black;
+  border-bottom: 5px solid black;
+}
+
+
+.friendInputs input {
+  width: 200px;
+  height: 50px;
+  font-size: 18px;
+  margin: 10px;
+  padding-left: 10px;
+}
+
+.friendInputs button {
   border: none;
   width: 150px;
   height: 50px;
@@ -43,7 +105,19 @@ button:hover {
 }
 
 .listOfFriends {
+  width: 50%;
   display: flex;
+  float: left;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.listOfTweets{
+  width: 50%;
+  display: flex;
+  float: left;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -84,6 +158,25 @@ button:hover {
   background-color: #054d14;
   color: white;
   font-family: 'Courier New', Courier, monospace;
+}
+
+
+.tweetContainer {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.tweet {
+  background-color: #2226f3bd;
+  color: white;
+  display: flex;
+  padding: 10px;
+}
+
+.tweet h4 {
+  margin-left: 10px;
 }
 
 #removeBtn {
